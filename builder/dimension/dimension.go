@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"errors"
 
-	"github.com/grafadruid/go-druid/builder"
-	"github.com/grafadruid/go-druid/builder/types"
+	"github.com/Hiddennn/go-druid/builder"
+	"github.com/Hiddennn/go-druid/builder/types"
 )
 
 type Base struct {

@@ -2,7 +2,7 @@ package filter
 
 import (
 	"encoding/json"
-	"github.com/grafadruid/go-druid/builder"
+	"github.com/Hiddennn/go-druid/builder"
 )
 
 type Or struct {

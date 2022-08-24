@@ -3,8 +3,8 @@ package dimension
 import (
 	"encoding/json"
 
-	"github.com/grafadruid/go-druid/builder"
-	"github.com/grafadruid/go-druid/builder/types"
+	"github.com/Hiddennn/go-druid/builder"
+	"github.com/Hiddennn/go-druid/builder/types"
 )
 
 type RegexFiltered struct {

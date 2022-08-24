@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"errors"
 
-	"github.com/grafadruid/go-druid/builder"
-	"github.com/grafadruid/go-druid/builder/datasource"
-	"github.com/grafadruid/go-druid/builder/intervals"
+	"github.com/Hiddennn/go-druid/builder"
+	"github.com/Hiddennn/go-druid/builder/datasource"
+	"github.com/Hiddennn/go-druid/builder/intervals"
 )
 
 type Base struct {

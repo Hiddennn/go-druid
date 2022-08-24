@@ -13,8 +13,8 @@ type SQL struct {
 }
 
 type SQLParameter struct {
-	Type  string `json:"type,omitempty"`
-	Value any    `json:"value,omitempty"`
+	Type  string      `json:"type,omitempty"`
+	Value interface{} `json:"value,omitempty"`
 }
 
 func NewSQL() *SQL {

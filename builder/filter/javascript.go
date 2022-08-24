@@ -3,8 +3,8 @@ package filter
 import (
 	"encoding/json"
 
-	"github.com/grafadruid/go-druid/builder"
-	"github.com/grafadruid/go-druid/builder/extractionfn"
+	"github.com/Hiddennn/go-druid/builder"
+	"github.com/Hiddennn/go-druid/builder/extractionfn"
 )
 
 type Javascript struct {

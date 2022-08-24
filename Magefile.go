@@ -153,7 +153,7 @@ func Build() error {
 }
 
 var (
-	pkgPrefixLen = len("github.com/grafadruid/go-druid")
+	pkgPrefixLen = len("github.com/Hiddennn/go-druid")
 	pkgs         []string
 	pkgsInit     sync.Once
 )

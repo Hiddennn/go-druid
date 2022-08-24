@@ -2,8 +2,8 @@ package aggregation
 
 import (
 	"encoding/json"
-	"github.com/grafadruid/go-druid/builder/filter"
-	"github.com/grafadruid/go-druid/builder/types"
+	"github.com/Hiddennn/go-druid/builder/filter"
+	"github.com/Hiddennn/go-druid/builder/types"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )

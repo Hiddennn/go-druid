@@ -1,7 +1,7 @@
 package extractionfn
 
 import (
-	"github.com/grafadruid/go-druid/builder/types"
+	"github.com/Hiddennn/go-druid/builder/types"
 )
 
 type StringFormat struct {

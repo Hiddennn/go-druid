@@ -8,16 +8,16 @@ import (
 	"log"
 	"time"
 
-	"github.com/grafadruid/go-druid/builder/intervals"
+	"github.com/Hiddennn/go-druid/builder/intervals"
 
+	"github.com/Hiddennn/go-druid"
+	"github.com/Hiddennn/go-druid/builder"
+	"github.com/Hiddennn/go-druid/builder/aggregation"
+	"github.com/Hiddennn/go-druid/builder/datasource"
+	"github.com/Hiddennn/go-druid/builder/filter"
+	"github.com/Hiddennn/go-druid/builder/granularity"
+	"github.com/Hiddennn/go-druid/builder/query"
 	"github.com/davecgh/go-spew/spew"
-	"github.com/grafadruid/go-druid"
-	"github.com/grafadruid/go-druid/builder"
-	"github.com/grafadruid/go-druid/builder/aggregation"
-	"github.com/grafadruid/go-druid/builder/datasource"
-	"github.com/grafadruid/go-druid/builder/filter"
-	"github.com/grafadruid/go-druid/builder/granularity"
-	"github.com/grafadruid/go-druid/builder/query"
 )
 
 func main() {
