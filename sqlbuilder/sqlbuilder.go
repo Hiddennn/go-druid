@@ -3,6 +3,7 @@ package sqlbuilder
 import (
 	"errors"
 	"github.com/Hiddennn/go-druid/builder/query"
+	"reflect"
 	"strings"
 )
 
@@ -125,22 +126,35 @@ func GenPlaceholders(n int) string {
 
 func ConvertValueToSQLParameter(value interface{}) query.SQLParameter {
 	var sqlType string
+	var sqlValue interface{}
 
-	switch value.(type) {
-	case int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64:
+	v := reflect.ValueOf(value)
+	if v.Kind() == reflect.Pointer {
+		v = v.Elem()
+	}
+
+	switch v.Kind() {
+	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
 		sqlType = "BIGINT"
-	case float32:
+		sqlValue = v.Int()
+	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+		sqlType = "BIGINT"
+		sqlValue = v.Uint()
+	case reflect.Float32:
 		sqlType = "FLOAT"
-	case float64:
+		sqlValue = v.Float()
+	case reflect.Float64:
 		sqlType = "DOUBLE"
-	case string:
+		sqlValue = v.Float()
+	case reflect.String:
 		sqlType = "VARCHAR"
+		sqlValue = v.String()
 	default:
 		return query.SQLParameter{}
 	}
 
 	return query.SQLParameter{
 		Type:  sqlType,
-		Value: value,
+		Value: sqlValue,
 	}
 }

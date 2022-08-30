@@ -2,6 +2,8 @@ package sqlbuilder
 
 import (
 	"fmt"
+	"github.com/davecgh/go-spew/spew"
+	"github.com/golang/protobuf/proto"
 	"testing"
 )
 
@@ -14,7 +16,7 @@ func TestSQLBuilder(t *testing.T) {
 		Field:     "bb",
 		Direction: "desc",
 	}).GroupBy("aa", "bb").Limit(10, 10).
-		Where("aa", "=", "aa")
+		Where("aa", "=", proto.String("aa"))
 
 	sql, err := builder.GetQuerySQL()
 	if err != nil {
@@ -23,5 +25,5 @@ func TestSQLBuilder(t *testing.T) {
 	fmt.Println(sql)
 
 	params := builder.GetQueryParams()
-	fmt.Println(params)
+	spew.Dump(params)
 }

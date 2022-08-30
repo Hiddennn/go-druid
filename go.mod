@@ -4,6 +4,7 @@ go 1.17
 
 require (
 	github.com/davecgh/go-spew v1.1.1
+	github.com/golang/protobuf v1.5.2
 	github.com/google/go-querystring v1.0.0
 	github.com/hashicorp/go-retryablehttp v0.6.7
 	github.com/magefile/mage v1.11.0
@@ -13,4 +14,5 @@ require (
 require (
 	github.com/hashicorp/go-cleanhttp v0.5.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
+	google.golang.org/protobuf v1.26.0 // indirect
 )
