@@ -1,6 +1,7 @@
 package sqlbuilder
 
 import (
+	"github.com/Hiddennn/go-druid/builder/query"
 	"strings"
 )
 
@@ -18,6 +19,14 @@ func (sb *SQLBuilder) whereRaw(operator string, s string, values []interface{}) 
 	if values == nil || len(values) == 0 {
 		return sb
 	}
+	tempParams := make([]query.SQLParameter, len(values))
+	for i, value := range values {
+		if value == nil {
+			return sb
+		}
+		tempParams[i] = ConvertValueToSQLParameter(value)
+	}
+	sb._whereParams = append(sb._whereParams, tempParams...)
 
 	var buf strings.Builder
 	buf.WriteString(sb._where) // append
@@ -32,10 +41,6 @@ func (sb *SQLBuilder) whereRaw(operator string, s string, values []interface{}) 
 
 	buf.WriteString(s)
 	sb._where = buf.String()
-
-	for _, value := range values {
-		sb._whereParams = append(sb._whereParams, ConvertValueToSQLParameter(value))
-	}
 
 	return sb
 }
@@ -105,6 +110,15 @@ func (sb *SQLBuilder) whereIn(operator string, condition string, field string, v
 		return sb
 	}
 
+	tempParams := make([]query.SQLParameter, len(values))
+	for i, value := range values {
+		if value == nil {
+			return sb
+		}
+		tempParams[i] = ConvertValueToSQLParameter(value)
+	}
+	sb._whereParams = append(sb._whereParams, tempParams...)
+
 	var buf strings.Builder
 	buf.WriteString(sb._where) // append
 
@@ -127,10 +141,6 @@ func (sb *SQLBuilder) whereIn(operator string, condition string, field string, v
 	buf.WriteString(")")
 
 	sb._where = buf.String()
-
-	for _, value := range values {
-		sb._whereParams = append(sb._whereParams, ConvertValueToSQLParameter(value))
-	}
 
 	return sb
 }

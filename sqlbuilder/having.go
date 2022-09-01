@@ -1,6 +1,7 @@
 package sqlbuilder
 
 import (
+	"github.com/Hiddennn/go-druid/builder/query"
 	"strings"
 )
 
@@ -15,6 +16,19 @@ func (sb *SQLBuilder) OrHavingRaw(s string, values ...interface{}) *SQLBuilder {
 }
 
 func (sb *SQLBuilder) havingRaw(operator string, s string, values []interface{}) *SQLBuilder {
+	if values == nil || len(values) == 0 {
+		return sb
+	}
+
+	tempParams := make([]query.SQLParameter, len(values))
+	for i, value := range values {
+		if value == nil {
+			return sb
+		}
+		tempParams[i] = ConvertValueToSQLParameter(value)
+	}
+	sb._havingParams = append(sb._havingParams, tempParams...)
+
 	var buf strings.Builder
 
 	buf.WriteString(sb._having) // append
@@ -30,10 +44,6 @@ func (sb *SQLBuilder) havingRaw(operator string, s string, values []interface{})
 	buf.WriteString(s)
 	sb._having = buf.String()
 
-	for _, value := range values {
-		sb._havingParams = append(sb._havingParams, ConvertValueToSQLParameter(value))
-	}
-
 	return sb
 }
 
@@ -48,6 +58,10 @@ func (sb *SQLBuilder) OrHaving(field string, condition string, value interface{}
 }
 
 func (sb *SQLBuilder) having(operator string, condition string, field string, value interface{}) *SQLBuilder {
+	if value == nil {
+		return sb
+	}
+
 	if sb._groupBy == "" { // group by not set
 		return sb
 	}
