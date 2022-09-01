@@ -2,6 +2,7 @@ package sqlbuilder
 
 import (
 	"github.com/Hiddennn/go-druid/builder/query"
+	"github.com/Hiddennn/go-druid/utils"
 	"strings"
 )
 
@@ -22,7 +23,7 @@ func (sb *SQLBuilder) havingRaw(operator string, s string, values []interface{})
 
 	tempParams := make([]query.SQLParameter, len(values))
 	for i, value := range values {
-		if value == nil {
+		if utils.IsNil(value) {
 			return sb
 		}
 		tempParams[i] = ConvertValueToSQLParameter(value)
@@ -58,7 +59,7 @@ func (sb *SQLBuilder) OrHaving(field string, condition string, value interface{}
 }
 
 func (sb *SQLBuilder) having(operator string, condition string, field string, value interface{}) *SQLBuilder {
-	if value == nil {
+	if utils.IsNil(value) {
 		return sb
 	}
 

@@ -2,6 +2,7 @@ package sqlbuilder
 
 import (
 	"github.com/Hiddennn/go-druid/builder/query"
+	"github.com/Hiddennn/go-druid/utils"
 	"strings"
 )
 
@@ -21,7 +22,7 @@ func (sb *SQLBuilder) whereRaw(operator string, s string, values []interface{}) 
 	}
 	tempParams := make([]query.SQLParameter, len(values))
 	for i, value := range values {
-		if value == nil {
+		if utils.IsNil(value) {
 			return sb
 		}
 		tempParams[i] = ConvertValueToSQLParameter(value)
@@ -56,7 +57,7 @@ func (sb *SQLBuilder) OrWhere(field string, condition string, value interface{})
 }
 
 func (sb *SQLBuilder) where(operator string, condition string, field string, value interface{}) *SQLBuilder {
-	if value == nil {
+	if utils.IsNil(value) {
 		return sb
 	}
 
@@ -112,7 +113,7 @@ func (sb *SQLBuilder) whereIn(operator string, condition string, field string, v
 
 	tempParams := make([]query.SQLParameter, len(values))
 	for i, value := range values {
-		if value == nil {
+		if utils.IsNil(value) {
 			return sb
 		}
 		tempParams[i] = ConvertValueToSQLParameter(value)
@@ -139,6 +140,66 @@ func (sb *SQLBuilder) whereIn(operator string, condition string, field string, v
 	buf.WriteString("(")
 	buf.WriteString(plhs)
 	buf.WriteString(")")
+
+	sb._where = buf.String()
+
+	return sb
+}
+
+// WhereMvOverlap set where in cond
+func (sb *SQLBuilder) WhereMvOverlap(field string, values ...interface{}) *SQLBuilder {
+	return sb.whereMvFunction("AND", "OVERLAP", field, values)
+}
+
+// OrWhereMvOverlap set or where in cond
+func (sb *SQLBuilder) OrWhereMvOverlap(field string, values ...interface{}) *SQLBuilder {
+	return sb.whereMvFunction("OR", "OVERLAP", field, values)
+}
+
+// WhereMvContains set where in cond
+func (sb *SQLBuilder) WhereMvContains(field string, values ...interface{}) *SQLBuilder {
+	return sb.whereMvFunction("AND", "CONTAINS", field, values)
+}
+
+// OrWhereMvContains set or where in cond
+func (sb *SQLBuilder) OrWhereMvContains(field string, values ...interface{}) *SQLBuilder {
+	return sb.whereMvFunction("OR", "CONTAINS", field, values)
+}
+
+func (sb *SQLBuilder) whereMvFunction(operator string, funcName string, field string, values []interface{}) *SQLBuilder {
+	if values == nil || len(values) == 0 {
+		return sb
+	}
+
+	tempParams := make([]query.SQLParameter, len(values))
+	for i, value := range values {
+		if utils.IsNil(value) {
+			return sb
+		}
+		tempParams[i] = ConvertValueToSQLParameter(value)
+	}
+	sb._whereParams = append(sb._whereParams, tempParams...)
+
+	var buf strings.Builder
+	buf.WriteString(sb._where) // append
+
+	if buf.Len() == 0 {
+		buf.WriteString("WHERE ")
+	} else {
+		buf.WriteString(" ")
+		buf.WriteString(operator)
+		buf.WriteString(" ")
+	}
+
+	plhs := GenPlaceholders(len(values))
+
+	buf.WriteString("MV_")
+	buf.WriteString(funcName)
+	buf.WriteString("(")
+	buf.WriteString(field)
+	buf.WriteString(", ARRAY[")
+	buf.WriteString(plhs)
+	buf.WriteString("])")
 
 	sb._where = buf.String()
 
