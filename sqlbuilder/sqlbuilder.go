@@ -129,7 +129,7 @@ func ConvertValueToSQLParameter(value interface{}) query.SQLParameter {
 	var sqlValue interface{}
 
 	v := reflect.ValueOf(value)
-	if v.Kind() == reflect.Pointer {
+	if v.Kind() == reflect.Ptr {
 		v = v.Elem()
 	}
 
